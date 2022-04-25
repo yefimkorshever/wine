@@ -20,4 +20,11 @@
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>index.html</name>
+			<type>1</type>
+			<location>Y:/python_ec_ws/wine/index.html</location>
+		</link>
+	</linkedResources>
 </projectDescription>
