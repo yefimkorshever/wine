@@ -9,7 +9,6 @@ def foundation_date():
 def years_since_date(beginning):
     today = datetime.date.today()
     return today.year - beginning.year
-    
 
 def agreed_number(number, noun):
     return (f'{number} {noun}')
