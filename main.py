@@ -1,19 +1,23 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-import datetime
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+import datetime
 import pandas
+from pprint import pprint
 
 
 def foundation_date():
     return datetime.date(1920, 1, 1)
 
+
 def years_since_date(beginning):
     today = datetime.date.today()
     return today.year - beginning.year
 
+
 def agreed_number(number, noun):
     return (f'{number} {noun}')
-    
+
+
 def agree_noun_with_number_ru(
         number,
         initial_form,
@@ -32,33 +36,49 @@ def agree_noun_with_number_ru(
     else:
         return agreed_number(number, plural_genitive)
 
-def main():
+
+def load_wines():
     excel_data_df = pandas.read_excel(
-        'wine.xlsx',
+        'wine2.xlsx',
         sheet_name='Лист1',
         dtype={'Цена': int, }
     )
-    wines = excel_data_df.to_dict('records')
-       
+
+    wine_rows = excel_data_df.to_dict('records')
+    wine_categories = dict()
+
+    for bottle in wine_rows:
+        bottles_in_category = wine_categories.get(bottle['Категория'], list())
+        bottles_in_category.append(bottle)
+        wine_categories[bottle['Категория']] = bottles_in_category
+
+    return wine_categories
+
+
+def main():
+    wines = load_wines()
+    pprint(wines)
+    return
+
     start_date = foundation_date()
     number_years = years_since_date(start_date)
-    
+
     past_years = agree_noun_with_number_ru(number_years, 'год', 'года', 'лет')
-    
+
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
     )
-    
+
     template = env.get_template('template.html')
     rendered_page = template.render(past_years=past_years, wines=wines)
-    
+
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
-    
+
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
-    
-    
+
+
 if __name__ == '__main__':
-    main()    
+    main()
