@@ -2,7 +2,6 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
-from pprint import pprint
 from collections import defaultdict
 
 
@@ -56,8 +55,10 @@ def load_wines():
 
 def main():
     wines = load_wines()
-    pprint(wines)
-    return
+    for category in wines:
+        print(category)
+        for bottle in wines[category]:
+            print('    ', bottle['Название'])
 
     start_date = foundation_date()
     number_years = years_since_date(start_date)

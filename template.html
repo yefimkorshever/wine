@@ -113,22 +113,25 @@
             </p>
           </div>
         </div>
+        {% for category in wines %}
+        <h2 class="d-block">{{category}}</h2>
         <div class="row">
-        {% for wine in wines %}
+          {% for bottle in wines[category] %}
           <div class="col-lg-4 mb-5 col-md-6">
             <div class="wine_v_1 text-center pb-4 pt-5">
-              <img src="images/{{wine.Картинка}}" alt="Image" class="img-fluid">
+              <img src="images/{{bottle.Картинка}}" alt="Image" class="img-fluid">
               <div>
-                <h3 class="heading mt-3 mb-3 text-dark">{{wine.Название}}</h3>
+                <h3 class="heading mt-3 mb-3 text-dark">{{bottle.Название}}</h3>
                 <p>
-                  Сорт винограда - {{wine.Сорт}}<br/>
-                  <span class="price">{{wine.Цена}} р.</span>
+                  Сорт винограда - {{bottle.Сорт}}<br/>
+                  <span class="price">{{bottle.Цена}} р.</span>
                 </p>
               </div>
             </div>
           </div>
-         {% endfor %}
+          {% endfor %}
        </div>
+        {% endfor %}
       </div>
     </div>
 
