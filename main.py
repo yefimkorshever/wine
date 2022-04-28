@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
 from pprint import pprint
+from collections import defaultdict
 
 
 def foundation_date():
@@ -45,12 +46,10 @@ def load_wines():
     )
 
     wine_rows = excel_data_df.to_dict('records')
-    wine_categories = dict()
+    wine_categories = defaultdict(list)
 
     for bottle in wine_rows:
-        bottles_in_category = wine_categories.get(bottle['Категория'], list())
-        bottles_in_category.append(bottle)
-        wine_categories[bottle['Категория']] = bottles_in_category
+        wine_categories[bottle['Категория']].append(bottle)
 
     return wine_categories
 
