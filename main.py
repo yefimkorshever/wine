@@ -39,7 +39,7 @@ def agree_noun_with_number_ru(
 
 def load_wines():
     excel_data_df = pandas.read_excel(
-        'wine2.xlsx',
+        'wine3.xlsx',
         dtype={'Цена': int, },
         keep_default_na=False,
     )
@@ -74,6 +74,7 @@ def main():
         past_years=past_years,
         ordered_categories=ordered_categories,
         wines=wines,
+        profitable_offer='Выгодное предложение'
     )
 
     with open('index.html', 'w', encoding="utf8") as file:
