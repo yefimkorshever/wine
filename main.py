@@ -40,27 +40,26 @@ def agree_noun_with_number_ru(
 def load_wines():
     excel_data_df = pandas.read_excel(
         'wine2.xlsx',
-        sheet_name='Лист1',
-        dtype={'Цена': int, }
+        dtype={'Цена': int, },
+        keep_default_na=False,
     )
 
     wine_rows = excel_data_df.to_dict('records')
-    wine_categories = defaultdict(list)
+    wines = defaultdict(list)
 
     for bottle in wine_rows:
-        wine_categories[bottle['Категория']].append(bottle)
+        wines[bottle['Категория']].append(bottle)
 
-    return wine_categories
+    ordered_categories = sorted(wines.keys())
+
+    return ordered_categories, wines
 
 
 def main():
-    wines = load_wines()
-    for category in wines:
-        print(category)
-        for bottle in wines[category]:
-            print('    ', bottle['Название'])
+    ordered_categories, wines = load_wines()
 
     start_date = foundation_date()
+
     number_years = years_since_date(start_date)
 
     past_years = agree_noun_with_number_ru(number_years, 'год', 'года', 'лет')
@@ -71,7 +70,11 @@ def main():
     )
 
     template = env.get_template('template.html')
-    rendered_page = template.render(past_years=past_years, wines=wines)
+    rendered_page = template.render(
+        past_years=past_years,
+        ordered_categories=ordered_categories,
+        wines=wines,
+    )
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)

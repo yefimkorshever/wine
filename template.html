@@ -113,7 +113,7 @@
             </p>
           </div>
         </div>
-        {% for category in wines %}
+        {% for category in ordered_categories %}
         <h2 class="d-block">{{category}}</h2>
         <div class="row">
           {% for bottle in wines[category] %}
@@ -123,7 +123,9 @@
               <div>
                 <h3 class="heading mt-3 mb-3 text-dark">{{bottle.Название}}</h3>
                 <p>
+                  {% if bottle.Сорт%}
                   Сорт винограда - {{bottle.Сорт}}<br/>
+                  {% endif %}
                   <span class="price">{{bottle.Цена}} р.</span>
                 </p>
               </div>
