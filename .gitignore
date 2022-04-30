@@ -1,4 +1,5 @@
 env/
+.settings/
 .vscode/
 .project
 .pydevproject
