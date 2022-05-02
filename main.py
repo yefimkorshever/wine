@@ -26,10 +26,6 @@ def create_parser():
     return parser
 
 
-def agreed_number(number, noun):
-    return (f'{number} {noun}')
-
-
 def agree_noun_with_number_ru(
         number,
         initial_form,
@@ -38,15 +34,15 @@ def agree_noun_with_number_ru(
 
     remainder_hundred = number % 100
     if remainder_hundred in tuple(range(11, 20)):
-        return agreed_number(number, plural_genitive)
+        return (f'{number} {plural_genitive}')
 
     remainder_ten = number % 10
     if remainder_ten == 1:
-        return agreed_number(number, initial_form)
+        return (f'{number} {initial_form}')
     elif remainder_ten in (2, 3, 4):
-        return agreed_number(number, singular_genitive)
+        return (f'{number} {singular_genitive}')
     else:
-        return agreed_number(number, plural_genitive)
+        return (f'{number} {plural_genitive}')
 
 
 def load_beverages(file_path):
@@ -87,7 +83,6 @@ def main():
     shop_age = current_year - namespace.foundation_year
 
     shop_age_phrase = agree_noun_with_number_ru(shop_age, 'год', 'года', 'лет')
-
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
