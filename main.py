@@ -1,3 +1,4 @@
+import argparse
 import datetime
 from collections import defaultdict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
@@ -6,13 +7,23 @@ import pandas
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-def foundation_date():
-    return datetime.date(1920, 1, 1)
+def create_parser():
+    description = 'The program renders a web-site of a wine shop'
+    parser = argparse.ArgumentParser(description=description)
+    arg_help = 'path to a file with beverages characteristics (*.xls),\
+    wines3.xlsx by default'
 
-
-def years_since_date(beginning):
-    today = datetime.date.today()
-    return today.year - beginning.year
+    parser.add_argument('--file_path',
+                        help=arg_help,
+                        default='wine3.xlsx'
+                        )
+    arg_help = 'The year of company\'s foundation, 1920 by default'
+    parser.add_argument('--foundation_year',
+                        help='The year of companie\'s foundation',
+                        default=arg_help,
+                        type=int
+                        )
+    return parser
 
 
 def agreed_number(number, noun):
@@ -38,12 +49,17 @@ def agree_noun_with_number_ru(
         return agreed_number(number, plural_genitive)
 
 
-def load_wines():
-    excel_data_df = pandas.read_excel(
-        'wine3.xlsx',
-        dtype={'Цена': int, },
-        keep_default_na=False,
-    )
+def load_beverages(file_path):
+    try:
+        excel_data_df = pandas.read_excel(
+            file_path,
+            dtype={'Цена': int, },
+            keep_default_na=False,
+        )
+    except Exception as mistake:
+        print(f'Failed to load beverages characteristics from {file_path}\
+        cause: {mistake}')
+        return None
 
     wine_rows = excel_data_df.to_dict('records')
     wines = defaultdict(list)
@@ -57,13 +73,20 @@ def load_wines():
 
 
 def main():
-    ordered_categories, wines = load_wines()
+    parser = create_parser()
+    namespace = parser.parse_args()
 
-    start_date = foundation_date()
+    beverages_characteristics = load_beverages(namespace.file_path)
+    if beverages_characteristics is None:
+        return
 
-    number_years = years_since_date(start_date)
+    ordered_categories, wines = beverages_characteristics
 
-    past_years = agree_noun_with_number_ru(number_years, 'год', 'года', 'лет')
+    today = datetime.date.today()
+    current_year = today.year
+    shop_age = current_year - namespace.foundation_year
+
+    shop_age_phrase = agree_noun_with_number_ru(shop_age, 'год', 'года', 'лет')
 
     env = Environment(
         loader=FileSystemLoader('.'),
@@ -72,7 +95,7 @@ def main():
 
     template = env.get_template('template.html')
     rendered_page = template.render(
-        past_years=past_years,
+        shop_age_phrase=shop_age_phrase,
         ordered_categories=ordered_categories,
         wines=wines,
         profitable_offer='Выгодное предложение'
