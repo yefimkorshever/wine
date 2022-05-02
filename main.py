@@ -57,15 +57,14 @@ def load_beverages(file_path):
         cause: {mistake}')
         return None
 
-    wine_rows = excel_data_df.to_dict('records')
-    wines = defaultdict(list)
+    beverages_characteristics_list = excel_data_df.to_dict('records')
+    beverages_characteristics_dict = defaultdict(list)
 
-    for bottle in wine_rows:
-        wines[bottle['Категория']].append(bottle)
+    for characteristic in beverages_characteristics_list:
+        category = characteristic['Категория']
+        beverages_characteristics_dict[category].append(characteristic)
 
-    ordered_categories = sorted(wines.keys())
-
-    return ordered_categories, wines
+    return beverages_characteristics_dict
 
 
 def main():
@@ -75,8 +74,6 @@ def main():
     beverages_characteristics = load_beverages(namespace.file_path)
     if beverages_characteristics is None:
         return
-
-    ordered_categories, wines = beverages_characteristics
 
     today = datetime.date.today()
     current_year = today.year
@@ -91,9 +88,7 @@ def main():
     template = env.get_template('template.html')
     rendered_page = template.render(
         shop_age_phrase=shop_age_phrase,
-        ordered_categories=ordered_categories,
-        wines=wines,
-        profitable_offer='Выгодное предложение'
+        beverages_characteristics=beverages_characteristics
     )
 
     with open('index.html', 'w', encoding="utf8") as file:

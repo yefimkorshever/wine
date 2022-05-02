@@ -113,29 +113,29 @@
             </p>
           </div>
         </div>
-        {% for category in ordered_categories %}
-        <h2 class="d-block">{{category}}</h2>
-        <div class="row">
-          {% for bottle in wines[category] %}
-          <div class="col-lg-4 mb-5 col-md-6">
-            <div class="wine_v_1 text-center pb-4 pt-5">
-              <img src="images/{{bottle.Картинка}}" alt="Image" class="img-fluid">
-              {% if bottle.Акция == profitable_offer%}
-              <img src="assets/profitable.png" style="width:10rem;height: 10rem;position:absolute;right: -20px;top: -20px;">
-              {% endif %}
-              <div>
-                <h3 class="heading mt-3 mb-3 text-dark">{{bottle.Название}}</h3>
-                <p>
-                  {% if bottle.Сорт%}
-                  Сорт винограда - {{bottle.Сорт}}<br/>
-                  {% endif %}
-                  <span class="price">{{bottle.Цена}} р.</span>
-                </p>
+        {% for category in beverages_characteristics %}
+          <h2 class="d-block">{{category}}</h2>
+          <div class="row">
+            {% for beverage_characteristics in beverages_characteristics[category] %}
+              <div class="col-lg-4 mb-5 col-md-6">
+                <div class="wine_v_1 text-center pb-4 pt-5">
+                  <img src="images/{{beverage_characteristics.Картинка}}" alt="Image" class="img-fluid">
+                    {% if beverage_characteristics.Акция %}
+                      <img src="assets/profitable.png" style="width:10rem;height: 10rem;position:absolute;right: -20px;top: -20px;">
+                    {% endif %}
+                  <div>
+                    <h3 class="heading mt-3 mb-3 text-dark">{{beverage_characteristics.Название}}</h3>
+                      <p>
+                        {% if beverage_characteristics.Сорт%}
+                          Сорт винограда - {{beverage_characteristics.Сорт}}<br/>
+                        {% endif %}
+                        <span class="price">{{beverage_characteristics.Цена}} р.</span>
+                      </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
-       </div>
         {% endfor %}
       </div>
     </div>
