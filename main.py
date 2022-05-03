@@ -10,17 +10,17 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 def create_parser():
     description = 'The program renders a web-site of a wine shop'
     parser = argparse.ArgumentParser(description=description)
-    arg_help = 'path to a file with beverages characteristics (*.xls),\
-    wines3.xlsx by default'
 
     parser.add_argument('--file_path',
-                        help=arg_help,
+                        help='path to a file with drinks characteristics\
+                         (*.xls); wines3.xlsx by default',
                         default='wine3.xlsx'
                         )
-    arg_help = 'The year of company\'s foundation, 1920 by default'
+
     parser.add_argument('--foundation_year',
-                        help='The year of companie\'s foundation',
-                        default=arg_help,
+                        help='The year of company\'s foundation;\
+                        1920 by default',
+                        default=1920,
                         type=int
                         )
     return parser
