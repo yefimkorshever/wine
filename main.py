@@ -45,7 +45,7 @@ def get_numeral_phrase_with_noun(
         return (f'{numeral} {genitive_plural}')
 
 
-def load_beverages(file_path):
+def load_drinks(file_path):
     try:
         excel_data_df = pandas.read_excel(
             file_path,
@@ -57,22 +57,22 @@ def load_beverages(file_path):
         cause: {mistake}')
         return None
 
-    beverages_characteristics_list = excel_data_df.to_dict('records')
-    beverages_characteristics_dict = defaultdict(list)
+    drinks_parameters_list = excel_data_df.to_dict('records')
+    categorized_drinks_parameters = defaultdict(list)
 
-    for characteristic in beverages_characteristics_list:
-        category = characteristic['Категория']
-        beverages_characteristics_dict[category].append(characteristic)
+    for drink_parameters in drinks_parameters_list:
+        category = drink_parameters['Категория']
+        categorized_drinks_parameters[category].append(drink_parameters)
 
-    return beverages_characteristics_dict
+    return categorized_drinks_parameters
 
 
 def main():
     parser = create_parser()
     namespace = parser.parse_args()
 
-    beverages_characteristics = load_beverages(namespace.file_path)
-    if beverages_characteristics is None:
+    categorized_drinks_parameters = load_drinks(namespace.file_path)
+    if categorized_drinks_parameters is None:
         return
 
     today = datetime.date.today()
@@ -92,7 +92,7 @@ def main():
     template = env.get_template('template.html')
     rendered_page = template.render(
         shop_age_phrase=shop_age_phrase,
-        beverages_characteristics=beverages_characteristics
+        categorized_drinks_parameters=categorized_drinks_parameters
     )
 
     with open('index.html', 'w', encoding="utf8") as file:

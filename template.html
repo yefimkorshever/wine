@@ -114,23 +114,23 @@
                         </p>
                     </div>
                 </div>
-                {% for category in beverages_characteristics %}
+                {% for category, drinks_parameters_list in categorized_drinks_parameters.items() %}
                   <h2 class="d-block">{{category}}</h2>
                   <div class="row">
-                      {% for beverage_characteristics in beverages_characteristics[category] %}
+                      {% for drink_parameters in drinks_parameters_list %}
                         <div class="col-lg-4 mb-5 col-md-6">
                             <div class="wine_v_1 text-center pb-4 pt-5">
-                                <img src="images/{{beverage_characteristics.Картинка}}" alt="Image" class="img-fluid">
-                                {% if beverage_characteristics.Акция %}
+                                <img src="images/{{drink_parameters.Картинка}}" alt="Image" class="img-fluid">
+                                {% if drink_parameters.Акция %}
                                   <img src="assets/profitable.png" style="width:10rem;height: 10rem;position:absolute;right: -20px;top: -20px;">
                                 {% endif %}
                                 <div>
-                                    <h3 class="heading mt-3 mb-3 text-dark">{{beverage_characteristics.Название}}</h3>
+                                    <h3 class="heading mt-3 mb-3 text-dark">{{drink_parameters.Название}}</h3>
                                     <p>
-                                        {% if beverage_characteristics.Сорт%}
-                                          Сорт винограда - {{beverage_characteristics.Сорт}}<br />
+                                        {% if drink_parameters.Сорт%}
+                                          Сорт винограда - {{drink_parameters.Сорт}}<br />
                                         {% endif %}
-                                        <span class="price">{{beverage_characteristics.Цена}} р.</span>
+                                        <span class="price">{{drink_parameters.Цена}} р.</span>
                                     </p>
                                 </div>
                             </div>
