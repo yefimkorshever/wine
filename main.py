@@ -76,8 +76,7 @@ def main():
         return
 
     today = datetime.date.today()
-    current_year = today.year
-    shop_age = current_year - namespace.foundation_year
+    shop_age = today.year - namespace.foundation_year
 
     shop_age_phrase = get_numeral_phrase_with_noun(
         shop_age,
