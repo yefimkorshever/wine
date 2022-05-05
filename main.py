@@ -14,7 +14,7 @@ def create_parser():
     parser.add_argument('--file_path',
                         help='path to a file with drinks characteristics\
                          (*.xls); wines3.xlsx by default',
-                        default='wine3.xlsx'
+                        default='drinks.xlsx'
                         )
 
     parser.add_argument('--foundation_year',
