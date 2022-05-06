@@ -1,70 +1,46 @@
 # New Russian wine
 
-Web-site of wine shop "New Russian wine".
+Web-site of wine shop "New Russian wine"
 
 ## Installing script
+
 There is a file named requirements.txt in the root project directory.
 Run in command line:
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
+## Inputting data
 
-## Inputing data
-
-Drinks cards are loaded from *.xlsx file.
+Drinks cards are loaded from  .xlsx file.
 There is an example in the root directory: **drinks.xlsx**.
 It's possible to copy the example and fill it up with your data.
-Also you can create a file (*.xlsx) with the following structure: 
+Also, you can create a file (.xlsx) with the following structure:
 
-<table border="1">
-   <caption><b>Структура файла для загрузки<b></caption>
-   <tr>
-    <th>Категория</th>
-    <th>Название</th>
-    <th>Сорт</th>
-    <th>Цена</th>
-    <th>Картинка</th>
-    <th>Акция</th>
-   </tr>
-   <tr>
-     <td>Белые вина</td>
-     <td>Белая леди</td>
-     <td>Дамский пальчик</td>
-     <td>399</td>
-     <td>belaya_ledi.png</td>
-     <td>Выгодное предложение</td>     
-   </tr>
-   <tr>
-     <td>Напитки</td>
-     <td>Коньяк классический</td>
-     <td></td>
-     <td>350</td>
-     <td>konyak_klassicheskyi.png</td>
-     <td></td>     
-   </tr>
-</table>
+| Категория  |      Название       |      Сорт       | Цена  |         Картинка         |        Акция         |
+| :--------: | :-----------------: | :-------------: | :---: | :----------------------: | :------------------: |
+| Белые вина |     Белая леди      | Дамский пальчик |  399  |     belaya_ledi.png      | Выгодное предложение |
+|  Напитки   | Коньяк классический |                 |  350  | konyak_klassicheskyi.png |                      |
 
 ## Running script
 
 - Download the project files
-- Run: 
+- Run:
 
-```
+```bash
 python3 main.py
 ```
-- При запуске можно указать путь к файлу загрузки и год основания компании.
-Подробнее параметры запуска можно посмотреть во встроенной справке; 
-для просмотра справки запустите 
 
-```
+- Go to [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+- It's possible to input a file path to .xlsx file and company's foundation date. To find out more, run:
+
+```bash
 python3 main.py -h
 ```
-
-- Go to [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ## Project purposes
 
 The project was created for educational purposes.
-It's a lesson in a python web developer course at [Devman](https://dvmn.org).
+It's a lesson for python and web developers at [Devman](https://dvmn.org)
