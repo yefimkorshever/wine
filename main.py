@@ -26,23 +26,18 @@ def create_parser():
     return parser
 
 
-def get_numeral_phrase_with_noun(
-        numeral,
-        nominative_case,
-        genitive_singular,
-        genitive_plural):
-
-    remainder_hundred = numeral % 100
+def get_age_phrase(age):
+    remainder_hundred = age % 100
     if remainder_hundred in tuple(range(11, 20)):
-        return (f'{numeral} {genitive_plural}')
+        return f'{age} лет'
 
-    remainder_ten = numeral % 10
+    remainder_ten = age % 10
     if remainder_ten == 1:
-        return (f'{numeral} {nominative_case}')
+        return f'{age} год'
     elif remainder_ten in (2, 3, 4):
-        return (f'{numeral} {genitive_singular}')
+        return f'{age} года'
     else:
-        return (f'{numeral} {genitive_plural}')
+        return f'{age} лет'
 
 
 def load_drinks(file_path):
@@ -71,13 +66,8 @@ def main():
 
     today = datetime.date.today()
     shop_age = today.year - namespace.foundation_year
+    shop_age_phrase = get_age_phrase(shop_age)
 
-    shop_age_phrase = get_numeral_phrase_with_noun(
-        shop_age,
-        'год',
-        'года',
-        'лет'
-    )
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
