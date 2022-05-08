@@ -46,16 +46,12 @@ def get_numeral_phrase_with_noun(
 
 
 def load_drinks(file_path):
-    try:
-        excel_data_df = pandas.read_excel(
-            file_path,
-            dtype={'Цена': int, },
-            keep_default_na=False,
-        )
-    except Exception as mistake:
-        print(f'Failed to load beverages characteristics from {file_path}\
-        cause: {mistake}')
-        return None
+
+    excel_data_df = pandas.read_excel(
+        file_path,
+        dtype={'Цена': int, },
+        keep_default_na=False,
+    )
 
     drinks_records = excel_data_df.to_dict('records')
     drinks_catalog = defaultdict(list)
@@ -72,8 +68,6 @@ def main():
     namespace = parser.parse_args()
 
     drinks = load_drinks(namespace.file_path)
-    if drinks is None:
-        return
 
     today = datetime.date.today()
     shop_age = today.year - namespace.foundation_year
