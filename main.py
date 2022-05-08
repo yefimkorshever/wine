@@ -57,22 +57,22 @@ def load_drinks(file_path):
         cause: {mistake}')
         return None
 
-    drinks_parameters_list = excel_data_df.to_dict('records')
-    categorized_drinks_parameters = defaultdict(list)
+    drinks_records = excel_data_df.to_dict('records')
+    drinks_catalog = defaultdict(list)
 
-    for drink_parameters in drinks_parameters_list:
+    for drink_parameters in drinks_records:
         category = drink_parameters['Категория']
-        categorized_drinks_parameters[category].append(drink_parameters)
+        drinks_catalog[category].append(drink_parameters)
 
-    return categorized_drinks_parameters
+    return drinks_catalog
 
 
 def main():
     parser = create_parser()
     namespace = parser.parse_args()
 
-    categorized_drinks_parameters = load_drinks(namespace.file_path)
-    if categorized_drinks_parameters is None:
+    drinks = load_drinks(namespace.file_path)
+    if drinks is None:
         return
 
     today = datetime.date.today()
@@ -92,7 +92,7 @@ def main():
     template = env.get_template('template.html')
     rendered_page = template.render(
         shop_age_phrase=shop_age_phrase,
-        categorized_drinks_parameters=categorized_drinks_parameters
+        drinks=drinks
     )
 
     with open('index.html', 'w', encoding="utf8") as file:

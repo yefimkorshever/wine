@@ -2,7 +2,7 @@
 
 Web-site of wine shop "New Russian wine"
 
-## Installing script
+## Installing necessary packages
 
 There is a file named requirements.txt in the root project directory.
 Run in command line:
